@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Products Form</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container">
+			<form th:object="${product}" th:action="@{/products/processProductForm}" method="post">
+			  <input type="hidden" th:field="*{id}">
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">Name</label>
+			    <input th:field="*{name}" type="text" class="form-control" placeholder="name">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput2">Price</label>
+			    <input th:field="*{price}" type="text" class="form-control" placeholder="price">
+			  </div>
+			  <button type="submit" class="btn btn-primary">Save</button>
+			</form>
+		</div>	
+	</body>
+</html>

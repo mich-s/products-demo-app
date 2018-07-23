@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Products</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+		
+		<style type="text/css">
+			.btn {
+				border-radius: 0;
+			}
+			.bg-primary {
+				color:white;
+			}
+			.abc {
+				text-align: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Welcome to products app</h2>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr class="table-primary">
+						<th>Name</th>
+						<th>Price</th>
+						<th></th>
+					</tr>
+				</thead>
+				
+			
+				<tbody>
+					<tr th:each="product : ${#lists.sort(products)}" >
+						<td th:text="${product.name}"></td>
+						<td th:text="${#numbers.formatDecimal(product.price,3,'POINT',2,'COMMA')}">$</td>
+						<td class="abc"><a th:href="${'/products/update/' + product.id}" class="btn btn-primary btn-sm" role="button">Update</a>
+						<a th:href="${'/products/delete/' + product.id}" class="btn btn-warning btn-sm" role="button">Delete</a></td>
+						
+					</tr>
+				</tbody>
+			
+			</table>
+			<hr>
+			<!-- <form th:action="@{/addProduct}" >
+			
+			</form> -->
+			<a th:href="@{/products/addProduct}" class="btn btn-primary" role="button">Add new product</a>
+			<!-- <button th:action="@{/addProduct}"type="button" class="btn btn-primary">Add new product</button> -->
+			
+		</div>
+	
+	
+		
+		
+	</body>
+</html>
