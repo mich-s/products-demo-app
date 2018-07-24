@@ -1,7 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Products Form</title>
+		<title>Category Form</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+		
+		
 		<style>
 			.form-control{
 				border-radius: 0;
@@ -10,25 +12,16 @@
 	</head>
 	<body>
 		<div class="container">
-			<form th:object="${product}" th:action="@{/products/processProductForm}" method="post">
+			<form th:object="${category}" th:action="@{/products/processCategoryForm}" method="post">
 			  <input type="hidden" th:field="*{id}">
 			  <div class="form-group">
 			    <label for="formGroupExampleInput">Name</label>
 			    <input th:field="*{name}" type="text" class="form-control" placeholder="name">
 			  </div>
-			  <div class="form-group">
+			 <!--  <div class="form-group">
 			    <label for="formGroupExampleInput2">Price</label>
 			    <input th:field="*{price}" type="text" class="form-control" placeholder="price">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleFormControlSelect2">Categories</label>
-			    <select th:field="*{categories}" multiple class="form-control" id="exampleFormControlSelect2">
-			      <option th:each="category : ${categories}" 
-				          th:value="${category.id}" 
-				          th:text="${category.name}">Category</option>
-			    </select>
-			  </div>
-			  
+			  </div> -->
 			  <button type="submit" class="btn btn-primary">Save</button>
 			</form>
 		</div>	

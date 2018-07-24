@@ -1,7 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>Products</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+			integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+			
+			
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" 
+			integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 		
 		<style type="text/css">
 			.btn {
@@ -10,20 +16,85 @@
 			.bg-primary {
 				color:white;
 			}
-			.abc {
+			.upd-del {
 				text-align: right;
 			}
+			
+			 .fa-pen {
+				margin-left:20px;
+			}
+			.fa-trash-alt {
+				margin-left:5px;
+				margin-right:5px;
+			} 
+			
+			
+			.addCategory:hover {
+				background-color:#B8DAFF;
+			}
+			.addCategory {
+				background-color:#F2F2F2;
+			}
+			.fas {
+				/* display: none; */
+				/* position: absolute; */
+				/* float:right; */
+				font-size: 14px;
+				/* padding-left:5px; */
+				/* right: 0; */
+			}
+			
+			/* .dropdown-item:hover .fas {
+				display: block;
+			} */
+			/* .dropdown-menu {
+				
+			} */
+			
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h2>Welcome to products app</h2>
+			<div class="text-muted">create your own list of products and set prices<br>to navigate easier through products, add your own custom categories</div>
+			<br><br>
 			
-			<table class="table table-striped">
+			
+			<div class="btn-group dropright">
+			  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Category
+			  </button>
+			  <div class="dropdown-menu" >
+			  	<a  th:href="${'/products/' + category.id}" class="dropdown-item" th:each="category : ${#lists.sort(categories)}">
+			  		<!-- <span th:href="${'/products/showForCategory/' + category.id}" th:text="${category.name}"></span> -->
+			  		<span th:text="${category.name}"></span>
+			  		
+			  		<!-- <object> <a th:href="${'/products/updateCategory/' + category.id}"><i class="fas fa-pen"></i></a></object>
+			  		<object><a th:href="${'/products/deleteCategory/' + category.id}"><i class="fas fa-trash-alt"></i></a></object> -->
+			  		<object class="justify-content-end"> <a th:href="${'/products/updateCategory/' + category.id}"><i class="fas fa-pen"></i></a></object>
+			  		<object class="justify-content-end"><a th:href="${'/products/deleteCategory/' + category.id}"><i class="fas fa-trash-alt"></i></a></object>
+			  	</a>
+			    
+			    <div class="dropdown-divider"></div>
+			    <a class="dropdown-item" th:href="@{/products}">Show all products</a>
+   	 			<a class="dropdown-item addCategory" th:href="@{/products/addCategory}">Add new category</a>
+			  </div>
+			</div>
+			<hr>
+			
+			<div th:text="${category} ? 'Category: ' + ${category.name} : 'Category: all categories'">
+			</div>
+			
+			
+			<hr>
+			<a th:href="@{/products/addProduct}" class="btn btn-primary" role="button">Add new product</a>
+			<hr>
+			<table class="table table-striped text-center">
 				<thead>
 					<tr class="table-primary">
 						<th>Name</th>
 						<th>Price</th>
+						<!-- <th>Category</th> -->
 						<th></th>
 					</tr>
 				</thead>
@@ -31,26 +102,37 @@
 			
 				<tbody>
 					<tr th:each="product : ${#lists.sort(products)}" >
-						<td th:text="${product.name}"></td>
-						<td th:text="${#numbers.formatDecimal(product.price,3,'POINT',2,'COMMA')}">$</td>
-						<td class="abc"><a th:href="${'/products/update/' + product.id}" class="btn btn-primary btn-sm" role="button">Update</a>
+						<td th:text="${product.name}">productName</td>
+						<td th:text="${'$' + #numbers.formatDecimal(product.price,1,'POINT',2,'COMMA')}"><span>$</span>productPrice</td>
+						<!-- <td >
+							<span th:each="category, iterStat : ${product.categories}">
+								<span th:text="${category.name}"></span><th:block th:if="${!iterStat.last}">,</th:block>
+							</span>
+						</td> -->
+						<td class="upd-del"><a th:href="${'/products/update/' + product.id}" class="btn btn-primary btn-sm" role="button">Update</a>
 						<a th:href="${'/products/delete/' + product.id}" class="btn btn-warning btn-sm" role="button">Delete</a></td>
 						
 					</tr>
 				</tbody>
 			
 			</table>
+			<!-- <div th:text="${#aggregates.sum(products)}"></div> -->
 			<hr>
 			<!-- <form th:action="@{/addProduct}" >
 			
 			</form> -->
-			<a th:href="@{/products/addProduct}" class="btn btn-primary" role="button">Add new product</a>
+			
 			<!-- <button th:action="@{/addProduct}"type="button" class="btn btn-primary">Add new product</button> -->
 			
 		</div>
 	
 	
 		
-		
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+		integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 	</body>
 </html>
