@@ -3,34 +3,63 @@
 		<title>Products Form</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
 		<style>
+			.container {
+				margin-top: 50px;
+			}
 			.form-control{
 				border-radius: 0;
+			}
+			.save {
+				float: right;
+			}
+			.header {
+				margin-bottom: 30px;
+			}
+			.col-sm-6 {
+				padding-left: 0;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
-			<form th:object="${product}" th:action="@{/products/processProductForm}" method="post">
-			  <input type="hidden" th:field="*{id}">
-			  <div class="form-group">
-			    <label for="formGroupExampleInput">Name</label>
-			    <input th:field="*{name}" type="text" class="form-control" placeholder="name">
-			  </div>
-			  <div class="form-group">
-			    <label for="formGroupExampleInput2">Price</label>
-			    <input th:field="*{price}" type="text" class="form-control" placeholder="price">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleFormControlSelect2">Categories</label>
-			    <select th:field="*{categories}" multiple class="form-control" id="exampleFormControlSelect2">
-			      <option th:each="category : ${categories}" 
-				          th:value="${category.id}" 
-				          th:text="${category.name}">Category</option>
-			    </select>
-			  </div>
-			  
-			  <button type="submit" class="btn btn-primary">Save</button>
-			</form>
+			<div class="header">
+				<h4>add/update product</h4>
+			</div>
+			<div class="col-sm-6">
+				<form th:object="${product}" th:action="@{/products/processProductForm}" method="post">
+				  <input type="hidden" th:field="*{id}">
+				  <div class="form-group">
+				    <label for="formGroupExampleInput">Name:</label>
+				    <input th:field="*{name}" type="text" class="form-control">
+				  </div>
+				  <div class="form-group">
+				    <label for="formGroupExampleInput2">Price:</label>
+				    <input th:field="*{price}" type="text" class="form-control" placeholder="price">
+				  </div>
+				  <hr>
+				  <div>
+					  <p th:text="'Current categories: '">Categories</p>
+					  <span th:each="category, iterStat : ${product.categories}">
+					  	<span th:text="${category.name}" ></span><th:block th:if="${!iterStat.last}">,</th:block>
+					  </span>
+				  
+				  </div>
+				  <hr>
+				  <div class="form-group">
+				    <label for="exampleFormControlSelect2">Select categories:</label>
+				    <select th:field="*{categories}" multiple class="form-control">
+				      <option th:each="category : ${categories}" 
+					          th:value="${category.id}" 
+					          th:text="${category.name}">Category</option>
+				    </select>
+				  </div>
+				  <div>
+					<a th:href="@{/products}" class="btn btn-outline-danger" role="button">Cancel</a>
+					<button type="submit" class="btn btn-primary save">Save</button>
+				  </div>
+				  
+				</form>
+			</div>	
 		</div>	
 	</body>
 </html>
