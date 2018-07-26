@@ -46,6 +46,9 @@
 			/* .dropright {
 				float:left;
 			} */
+			.prod-price {
+				width:40%;
+			}
 			
 		</style>
 	</head>
@@ -97,8 +100,8 @@
 				
 				<tbody>
 					<tr th:each="product : ${#lists.sort(products)}" >
-						<td th:text="${product.name}">productName</td>
-						<td th:text="${'$' + #numbers.formatDecimal(product.price,1,'POINT',2,'COMMA')}"><span>$</span>productPrice</td>
+						<td class="prod-price" th:text="${product.name}">productName</td>
+						<td class="prod-price" th:text="${'$' + #numbers.formatDecimal(product.price,1,'POINT',2,'COMMA')}"><span>$</span>productPrice</td>
 						<td class="upd-del">
 							<a th:href="${'/products/update/' + product.id}" class="btn btn-primary btn-sm" role="button">Update</a>
 							<a th:href="${'/products/delete/' + product.id}" class="btn btn-warning btn-sm" role="button">Delete</a>

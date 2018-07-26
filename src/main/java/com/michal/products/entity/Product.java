@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OrderBy;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
+
 
 @Entity
 public class Product implements Comparable<Product>{
@@ -20,14 +23,15 @@ public class Product implements Comparable<Product>{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;	
+	@NotNull(message="this text field can''t be empty")
+	private String name;
+	
+	
+	/*@Min(value=(long) 0.1, message="choose a number in a range from 0.1 to 1.000.000.000")
+	@Max(value=1000000000, message="choose a number in a range from 0.1 to 1.000.000.000")*/
+	@Range(min=(long) 0.1, max=1000000000, message="choose a number in a range from 0.1 to 1 000 000 000")
 	private double price;
 	
-	/*@ManyToMany(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinTable(name="product_category",
-				joinColumns=@JoinColumn(name="product_id"),
-				inverseJoinColumns=@JoinColumn(name="category_id"))
-	private List<Category> categories;*/
 	
 	@ManyToMany(cascade= CascadeType.MERGE)
 	@JoinTable(name="product_category",

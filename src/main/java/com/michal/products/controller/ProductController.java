@@ -1,19 +1,21 @@
 package com.michal.products.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michal.products.entity.Category;
 import com.michal.products.entity.Product;
@@ -30,6 +32,13 @@ public class ProductController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}	
+	
 	
 	@GetMapping("/products")
 	public String showHome(Model model) {
@@ -50,15 +59,22 @@ public class ProductController {
 	}
 	
 	@PostMapping("/products/processProductForm")
-	public String processProductForm(@ModelAttribute("product") Product product) {
+	public String processProductForm(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) {
 //		Optional<Category> categories = categoryRepository.findById(categoryId); 
 //		Category category = categories.get();
 //		myLogger.info(".........Category - optional: " + categories);
 //		myLogger.info(".........Category: " + category);
 //		myLogger.info("products categories " + product.getCategories());
 //		product.getCategories().add(category);
-		productRepository.save(product);
-		return "redirect:/products";
+		if(bindingResult.hasErrors()) {
+			List<Category> categories = (List<Category>) categoryRepository.findAll();
+			model.addAttribute("categories", categories);
+			return "products-form";
+		} else {
+			productRepository.save(product);
+			return "redirect:/products";
+		}
+		
 	}
 	
 	@GetMapping("/products/delete/{id}")
@@ -87,9 +103,13 @@ public class ProductController {
 	}
 	
 	@PostMapping("/products/processCategoryForm")
-	public String addCategory(@ModelAttribute("category") Category category) {
-		categoryRepository.save(category);
-		return "redirect:/products";
+	public String addCategory(@Valid @ModelAttribute("category") Category category, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "category-form";
+		} else {
+			categoryRepository.save(category);
+			return "redirect:/products";
+		}
 	}
 	
 	

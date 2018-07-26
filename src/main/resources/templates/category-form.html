@@ -20,6 +20,12 @@
 			.col-sm-6 {
 				padding-left: 0;
 			}
+			.error {
+				color: red;
+			}
+			/* .abc {
+				display: inline-block;
+			} */
 		</style>
 	</head>
 	<body>
@@ -32,7 +38,13 @@
 				  <input type="hidden" th:field="*{id}">
 				  <div class="form-group">
 				    <label for="formGroupExampleInput">Name:</label>
-				    <input th:field="*{name}" type="text" class="form-control">
+				    
+				    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error">Name error message</p>
+					    <input th:field="*{name}" type="text" class="form-control">
+					    
+				    
+				    
+				    <!-- <span th:classappend="${#fields.hasErrors('name')}? 'error'" ></span> -->
 				  </div>
 				  <div class="" >
 				  	<a th:href="@{/products}" class="btn btn-outline-danger" role="button">Cancel</a>
