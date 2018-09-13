@@ -21,17 +21,29 @@ import com.michal.products.entity.Category;
 import com.michal.products.entity.Product;
 import com.michal.products.repository.CategoryRepository;
 import com.michal.products.repository.ProductRepository;
+import com.michal.products.service.ProductsService;
 
 @Controller
 public class ProductController {
 
 	private Logger myLogger = Logger.getLogger(getClass().getName());
 	
-	@Autowired
+/*//	@Autowired
 	private ProductRepository productRepository;
 	
-	@Autowired
+//	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	public ProductController(ProductRepository productRepository, CategoryRepository categoryRepository) {
+		this.productRepository = productRepository;
+		this.categoryRepository = categoryRepository;
+	}*/
+	
+	private ProductsService productsService;
+	
+	public ProductController(ProductsService productsService) {
+		this.productsService = productsService;
+	}
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -44,15 +56,15 @@ public class ProductController {
 	public String showHome(Model model) {
 //		ArrayList<Product> products = (ArrayList<Product>) productRepository.findAll();
 //		System.out.println(products);
-		model.addAttribute("products", productRepository.findAll());
-		model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute("products", productsService.findAllProducts());
+		model.addAttribute("categories", productsService.findAllCategories());
 		return "products";
 	}
 	
 	@GetMapping("/products/addProduct")
 	public String addProductForm(Model model) {
 		model.addAttribute("product", new Product());
-		List<Category> categories = (List<Category>) categoryRepository.findAll();
+		List<Category> categories = (List<Category>) productsService.findAllCategories();
 //		myLogger.info("--------------Categories: " + categories);
 		model.addAttribute("categories", categories);
 		return "products-form";
@@ -67,11 +79,11 @@ public class ProductController {
 //		myLogger.info("products categories " + product.getCategories());
 //		product.getCategories().add(category);
 		if(bindingResult.hasErrors()) {
-			List<Category> categories = (List<Category>) categoryRepository.findAll();
+			List<Category> categories = (List<Category>) productsService.findAllCategories();
 			model.addAttribute("categories", categories);
 			return "products-form";
 		} else {
-			productRepository.save(product);
+			productsService.saveProduct(product);
 			return "redirect:/products";
 		}
 		
@@ -79,15 +91,15 @@ public class ProductController {
 	
 	@GetMapping("/products/delete/{id}")
 	public String deleteProduct(@PathVariable Long id) {
-		productRepository.deleteById(id);
+		productsService.deleteProductById(id);
 		return "redirect:/products";
 	}
 	
 	@GetMapping("/products/update/{id}")
 	public String updateProduct(@PathVariable Long id, Model model) {
-		myLogger.info("Product " + productRepository.findById(id).get());
-		Product product = productRepository.findById(id).get();
-		List<Category> categories = (List<Category>) categoryRepository.findAll();
+		myLogger.info("Product " + productsService.findProductById(id));
+		Product product = productsService.findProductById(id);
+		List<Category> categories = (List<Category>) productsService.findAllCategories();
 		
 		model.addAttribute("product", product);
 		model.addAttribute("categories", categories);
@@ -107,7 +119,7 @@ public class ProductController {
 		if(bindingResult.hasErrors()) {
 			return "category-form";
 		} else {
-			categoryRepository.save(category);
+			productsService.saveCategory(category);
 			return "redirect:/products";
 		}
 	}
@@ -115,15 +127,15 @@ public class ProductController {
 	
 	@GetMapping("/products/{id}")
 	public String showForCategory(@PathVariable Long id, Model model) {
-		Category category = categoryRepository.findById(id).get();
+		Category category = productsService.findCategoryById(id);
 		myLogger.info("Category: " + category);
 		
 		model.addAttribute("category", category);
 //		List<Test> findByUsers_UserName(String userName)
 		
 		
-		List<Product> products = productRepository.findByCategories_Id(id);
-		List<Category> categories = (List<Category>) categoryRepository.findAll();
+		List<Product> products = productsService.findProductsByCategories_Id(id);
+		List<Category> categories = (List<Category>) productsService.findAllCategories();
 		model.addAttribute("products", products);
 		model.addAttribute("categories", categories);
 		
@@ -135,15 +147,15 @@ public class ProductController {
 	
 	@GetMapping("/products/updateCategory/{id}")
 	public String updateCategory(@PathVariable Long id, Model model) {
-		Category category = categoryRepository.findById(id).get();
+		Category category = productsService.findCategoryById(id);
 		model.addAttribute("category", category);
 		return "category-form";
 	}
 	
 	@GetMapping("/products/deleteCategory/{id}")
 	public String deleteCategory(@PathVariable Long id) {
-		Category category = categoryRepository.findById(id).get();
-		categoryRepository.delete(category);
+		Category category = productsService.findCategoryById(id);
+		productsService.deleteCategory(category);
 		return "redirect:/products";
 	}
 }

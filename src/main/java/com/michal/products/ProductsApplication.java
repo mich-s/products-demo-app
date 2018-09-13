@@ -17,11 +17,11 @@ import com.michal.products.repository.ProductRepository;
 @SpringBootApplication
 public class ProductsApplication implements CommandLineRunner{
 
-	@Autowired
+	/*@Autowired
 	ProductRepository productRepository;
 	
 	@Autowired
-	CategoryRepository categoryRepository;
+	CategoryRepository categoryRepository;*/
 	
 	private Logger myLogger = Logger.getLogger(getClass().getName());
 	

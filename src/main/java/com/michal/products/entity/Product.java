@@ -39,6 +39,24 @@ public class Product implements Comparable<Product>{
 				inverseJoinColumns=@JoinColumn(name="category_id"))
 	private List<Category> categories = new ArrayList<>();
 	
+	public Product() {
+		
+	}
+	
+	public Product(String name, double price) {
+		this.name = name;
+		this.price = price;
+	}
+
+	public Product(Long id, String name, double price, List<Category> categories) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.categories = categories;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
