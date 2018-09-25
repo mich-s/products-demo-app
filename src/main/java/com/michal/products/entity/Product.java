@@ -26,7 +26,6 @@ public class Product implements Comparable<Product>{
 	@NotNull(message="this text field can''t be empty")
 	private String name;
 	
-	
 	/*@Min(value=(long) 0.1, message="choose a number in a range from 0.1 to 1.000.000.000")
 	@Max(value=1000000000, message="choose a number in a range from 0.1 to 1.000.000.000")*/
 	@Range(min=(long) 0.1, max=1000000000, message="choose a number in a range from 0.1 to 1 000 000 000")
@@ -54,8 +53,6 @@ public class Product implements Comparable<Product>{
 		this.price = price;
 		this.categories = categories;
 	}
-
-
 
 	public Long getId() {
 		return id;

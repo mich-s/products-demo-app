@@ -6,51 +6,8 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" 
 			integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 		
-		<style type="text/css">
-			.btn {
-				border-radius: 0;
-			}
-			.bg-primary {
-				color:white;
-			}
-			.upd-del {
-				text-align: right;
-			}
-			
-			 .fa-pen {
-				margin-left:20px;
-			}
-			.fa-trash-alt {
-				margin-left:5px;
-				margin-right:5px;
-			} 
-			
-			.addCategory:hover {
-				background-color:#B8DAFF;
-			}
-			.addCategory {
-				background-color:#F2F2F2;
-			}
-			.fas {
-				font-size: 14px;
-			}
-			
-			.heading {
-				text-align:center;
-				margin-top: 25px;
-				margin-bottom: 10px;
-			}
-			/* .float-right {
-				 overflow: hidden;
-			} */
-			/* .dropright {
-				float:left;
-			} */
-			.prod-price {
-				width:40%;
-			}
-			
-		</style>
+		<link rel="stylesheet" type="text/css" media="all"  href="../../css/home.css" th:href="@{/css/home.css}" />
+		
 	</head>
 	<body>
 		<div class="container">
@@ -59,8 +16,6 @@
 				<div class="text-muted">Create your list of products and set prices<br>To navigate easier through products, add your own custom categories</div>
 			</div>
 			<div>
-			
-			
 				<div class="btn-group dropright">
 				  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    Category
@@ -71,20 +26,15 @@
 				  		<object class="justify-content-end"> <a th:href="${'/products/updateCategory/' + category.id}"><i class="fas fa-pen"></i></a></object>
 				  		<object class="justify-content-end"><a th:href="${'/products/deleteCategory/' + category.id}"><i class="fas fa-trash-alt"></i></a></object>
 				  	</a>
-				    
 				    <div class="dropdown-divider"></div>
 				    <a class="dropdown-item" th:href="@{/products}">Show all products</a>
 	   	 			<a class="dropdown-item addCategory" th:href="@{/products/addCategory}">Add category</a>
 				  </div>
-				  
-				  
 				</div>
 				<div class="float-right">
 					<a th:href="@{/products/addProduct}" class="btn btn-primary" role="button">Add product</a>
 				</div>
 			</div>
-			
-			
 			
 			<hr>
 				<div th:text="${category} ? 'Showing products for: ' + ${category.name} : 'All products'"></div>

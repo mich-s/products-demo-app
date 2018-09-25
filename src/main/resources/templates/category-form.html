@@ -2,31 +2,7 @@
 	<head>
 		<title>Category Form</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
-		
-		
-		<style>
-			.container {
-				margin-top: 50px;
-			}
-			.form-control{
-				border-radius: 0;
-			}
-			.save {
-				float:right;
-			}
-			.header {
-				margin-bottom: 30px;
-			}
-			.col-sm-6 {
-				padding-left: 0;
-			}
-			.error {
-				color: red;
-			}
-			/* .abc {
-				display: inline-block;
-			} */
-		</style>
+		<link rel="stylesheet" type="text/css" media="all"  href="../../css/form.css" th:href="@{/css/form.css}" />
 	</head>
 	<body>
 		<div class="container">
@@ -42,9 +18,6 @@
 				    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error">Name error message</p>
 					    <input th:field="*{name}" type="text" class="form-control">
 					    
-				    
-				    
-				    <!-- <span th:classappend="${#fields.hasErrors('name')}? 'error'" ></span> -->
 				  </div>
 				  <div class="" >
 				  	<a th:href="@{/products}" class="btn btn-outline-danger" role="button">Cancel</a>

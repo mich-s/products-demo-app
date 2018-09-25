@@ -17,7 +17,6 @@ public class Category implements Comparable<Category>{
 	private Long id;
 	
 	@NotNull(message="this text field can''t be empty")
-	/*@Size(min=1, message="at least 1 char is required")*/
 	private String name;
 	
 	/*@ManyToMany(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

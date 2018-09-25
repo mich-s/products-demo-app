@@ -1,0 +1,38 @@
+.btn {
+	border-radius: 0;
+}
+.bg-primary {
+	color:white;
+}
+.upd-del {
+	text-align: right;
+}
+
+.fa-pen {
+	margin-left:20px;
+}
+.fa-trash-alt {
+	margin-left:5px;
+	margin-right:5px;
+} 
+
+.addCategory:hover {
+	background-color:#B8DAFF;
+}
+.addCategory {
+	background-color:#F2F2F2;
+}
+.fas {
+	font-size: 14px;
+}
+
+.heading {
+	text-align:center;
+	margin-top: 25px;
+	margin-bottom: 10px;
+}
+
+.prod-price {
+	width:40%;
+}
+			

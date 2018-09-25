@@ -9,8 +9,6 @@ import com.michal.products.entity.Product;
 
 public interface ProductRepository extends CrudRepository<Product, Long>{
 
-//	List<Test> findByUsers_UserName(String userName);
-	
 	List<Product> findByCategories_Id(Long id);
 	
 	

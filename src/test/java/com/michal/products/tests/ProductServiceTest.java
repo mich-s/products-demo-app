@@ -65,12 +65,10 @@ public class ProductServiceTest {
 		List<Product> products = productsService.findAllProducts();
 		
 		assertEquals(products.size(), 3);
-//		assertEquals(products.get(1).getCategories().get(0).getName(), "grocery");
 	}
 	
 	@Test
 	public void shouldReturnAllProductsByGivenCategoryId() {
-		
 		when(productRepository.findByCategories_Id(categoriesStub.get(0).getId())).thenReturn(productsStub);
 		
 		List<Product> products = productsService.findProductsByCategories_Id(categoriesStub.get(0).getId());

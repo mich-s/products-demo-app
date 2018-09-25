@@ -1,11 +1,9 @@
 package com.michal.products.controller;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,25 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.michal.products.entity.Category;
 import com.michal.products.entity.Product;
-import com.michal.products.repository.CategoryRepository;
-import com.michal.products.repository.ProductRepository;
 import com.michal.products.service.ProductsService;
 
 @Controller
 public class ProductController {
 
-	private Logger myLogger = Logger.getLogger(getClass().getName());
-	
-/*//	@Autowired
-	private ProductRepository productRepository;
-	
-//	@Autowired
-	private CategoryRepository categoryRepository;
-	
-	public ProductController(ProductRepository productRepository, CategoryRepository categoryRepository) {
-		this.productRepository = productRepository;
-		this.categoryRepository = categoryRepository;
-	}*/
+//	private Logger myLogger = Logger.getLogger(getClass().getName());
 	
 	private ProductsService productsService;
 	
@@ -54,8 +39,6 @@ public class ProductController {
 	
 	@GetMapping("/products")
 	public String showHome(Model model) {
-//		ArrayList<Product> products = (ArrayList<Product>) productRepository.findAll();
-//		System.out.println(products);
 		model.addAttribute("products", productsService.findAllProducts());
 		model.addAttribute("categories", productsService.findAllCategories());
 		return "products";
@@ -72,12 +55,6 @@ public class ProductController {
 	
 	@PostMapping("/products/processProductForm")
 	public String processProductForm(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) {
-//		Optional<Category> categories = categoryRepository.findById(categoryId); 
-//		Category category = categories.get();
-//		myLogger.info(".........Category - optional: " + categories);
-//		myLogger.info(".........Category: " + category);
-//		myLogger.info("products categories " + product.getCategories());
-//		product.getCategories().add(category);
 		if(bindingResult.hasErrors()) {
 			List<Category> categories = (List<Category>) productsService.findAllCategories();
 			model.addAttribute("categories", categories);
@@ -86,7 +63,6 @@ public class ProductController {
 			productsService.saveProduct(product);
 			return "redirect:/products";
 		}
-		
 	}
 	
 	@GetMapping("/products/delete/{id}")
@@ -97,7 +73,7 @@ public class ProductController {
 	
 	@GetMapping("/products/update/{id}")
 	public String updateProduct(@PathVariable Long id, Model model) {
-		myLogger.info("Product " + productsService.findProductById(id));
+//		myLogger.info("Product " + productsService.findProductById(id));
 		Product product = productsService.findProductById(id);
 		List<Category> categories = (List<Category>) productsService.findAllCategories();
 		
@@ -124,23 +100,19 @@ public class ProductController {
 		}
 	}
 	
-	
 	@GetMapping("/products/{id}")
 	public String showForCategory(@PathVariable Long id, Model model) {
 		Category category = productsService.findCategoryById(id);
-		myLogger.info("Category: " + category);
+//		myLogger.info("Category: " + category);
 		
 		model.addAttribute("category", category);
-//		List<Test> findByUsers_UserName(String userName)
-		
 		
 		List<Product> products = productsService.findProductsByCategories_Id(id);
 		List<Category> categories = (List<Category>) productsService.findAllCategories();
 		model.addAttribute("products", products);
 		model.addAttribute("categories", categories);
 		
-//		List<Product> products = (List<Product>) productRepository.findAll();
-		myLogger.info("Filtered products?: " + products);
+//		myLogger.info("Filtered products?: " + products);
 		
 		return "products";
 	}
