@@ -3,7 +3,6 @@
 
 _products-demo-app_ is a sample Spring Boot project that allows you to perform CRUD operations on products and categories.
 
----
 ### Prerequisites
 Basic software you'll need:
 ```
@@ -18,7 +17,7 @@ Spring Boot (Spring MVC, Spring Data JPA), Maven, MySQL, JUnit 4, Thymeleaf
 	```
 	git clone https://github.com/mich-s/products-demo-app.git
 	```
-2. Configure database - update credentials in `src/main/resources/application.properties`
+2. Configure database - update credentials in _src/main/resources/application.properties_
 	```
 	spring.datasource.url=jdbc:mysql://localhost:3306/products?useSSL=false&createDatabaseIfNotExist=true
 	spring.datasource.username=
@@ -41,6 +40,6 @@ Spring Boot (Spring MVC, Spring Data JPA), Maven, MySQL, JUnit 4, Thymeleaf
 	```
 ### Screenshots
 ![Alt](
-https://github.com/mich-s/todolist-app/blob/master/src/main/webapp/resources/img/p1.PNG)
+https://github.com/mich-s/products-demo-app/blob/master/src/main/webapp/resources/img/p1.PNG)
 ![Alt](
-https://github.com/mich-s/todolist-app/blob/master/src/main/webapp/resources/img/p2.PNG)
+https://github.com/mich-s/products-demo-app/blob/master/src/main/webapp/resources/img/p2.PNG)
