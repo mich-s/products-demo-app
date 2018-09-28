@@ -40,6 +40,6 @@ Spring Boot (Spring MVC, Spring Data JPA), Maven, MySQL, JUnit 4, Thymeleaf
 	```
 ### Screenshots
 ![Alt](
-https://github.com/mich-s/products-demo-app/blob/master/src/main/webapp/resources/img/p1.PNG)
+https://github.com/mich-s/products-demo-app/blob/master/src/main/resources/static/img/p1.PNG)
 ![Alt](
-https://github.com/mich-s/products-demo-app/blob/master/src/main/webapp/resources/img/p2.PNG)
+https://github.com/mich-s/products-demo-app/blob/master/src/main/resources/static/img/p2.PNG)
